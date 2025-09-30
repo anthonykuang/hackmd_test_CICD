@@ -12,9 +12,10 @@ def generate_html_report(output_dir):
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     # 假設我們用 calculator 的功能
-    from calculator import add, subtract
-    result_add = add(10, 5)
-    result_subtract = subtract(10, 5)
+    from calculator import Calculator
+    calc = Calculator()
+    result_add = calc.add(10, 5)
+    result_subtract = calc.subtract(10, 5)
 
     html_content = f"""
     <!DOCTYPE html>
