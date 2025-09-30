@@ -2,9 +2,9 @@ name: Python CI
 
 on:
   push:
-    branches:[master]
+    branches:['master']
   pull_request:
-    branches:[master]
+    branches:['master']
 jobs:
   build_and_test:
     runs-on: ${{ matrix.os }}
