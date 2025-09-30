@@ -44,7 +44,7 @@ jobs:
           path: ./python_project1/output
   # CD 階段：部署到 GitHub Pages
   deploy:
-    needs: build-and-test # ✨ 確保在 CI 成功後才執行部署 ✨
+    needs: build_and_test # ✨ 確保在 CI 成功後才執行部署 ✨
     if: github.ref == 'refs/heads/master' # ✨ 僅在推送到 master 分支時才部署 ✨
     runs-on: ubuntu-latest
     environment:
