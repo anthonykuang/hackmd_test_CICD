@@ -30,5 +30,38 @@ jobs:
       - name: Run tests
         run: |
           pytest
-        
+      - name: 生成報告 HTML
+        working-directory: ./python_project1
+        run: python src/generator.py
+      # ✨ 新增：上傳構建產物 (HTML 檔案) 以便部署作業使用 ✨
+
+      - name: 檢查輸出檔案
+        run: ls -R ./python_project1/output
+
+      - name: 上傳部署產物 (給 Pages)
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./python_project1/output
+  # CD 階段：部署到 GitHub Pages
+  deploy:
+    needs: build-and-test # ✨ 確保在 CI 成功後才執行部署 ✨
+    if: github.ref == 'refs/heads/master' # ✨ 僅在推送到 master 分支時才部署 ✨
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }} # 部署後的 URL
+    permissions: # ✨ 在這裡新增這個區塊 ✨
+      id-token: write # 為 GITHUB_TOKEN 授予 id-token 寫入權限
+      pages: write    # 通常也需要 pages 寫入權限來部署
+
+    steps:
+      - name: 設定 GitHub Pages
+        uses: actions/configure-pages@v4
+
+      - name: 部署到 GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: 檢查部署 URL
+        run: echo "部署已完成，請訪問：${{ steps.deployment.outputs.page_url }}"
     
