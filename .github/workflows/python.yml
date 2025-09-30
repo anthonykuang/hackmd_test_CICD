@@ -2,6 +2,7 @@ name: Python CI
 
 on:
   push:
+    # branches: 後面要加一個空格，不然會報錯
     branches: ['master']
   pull_request:
     branches: ['master']
@@ -26,6 +27,7 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt;fi
       - name: Run tests
+          # if [ -f pytest.ini ]; then pytest; fi
         run: |
-          if [ -f pytest.ini ]; then pytest; fi
+          pytest
     
